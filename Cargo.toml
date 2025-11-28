@@ -4,6 +4,6 @@ version = "1.0.0"
 edition = "2024"
 description = "A set of small utility tools for Rust programming"
 authors = ["SQD.exe"]
-repository = "https://github.com/SQDexe/ant-algorithm"
+repository = "https://github.com/SQDexe/sqds-tools"
 readme = "README.md"
 license = "Unlicense"
