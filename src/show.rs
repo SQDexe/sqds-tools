@@ -1,5 +1,4 @@
 use core::{
-    borrow::Borrow,
     convert::Infallible,
     fmt::{
         Display,
@@ -642,13 +641,13 @@ where T: Display {
     fn show_slice(&self) -> DisplaySlice<'_, T, char, &str, char>;
     }
 
-impl<T, S> ShowSlice<T> for S
-where T: Display, S: Borrow<[T]> {
+impl<T> ShowSlice<T> for [T]
+where T: Display {
     fn show_manual<U, V, W>(&self, prefix: Option<U>, separator: Option<V>, suffix: Option<W>) -> DisplaySlice<'_, T, U, V, W>
     where U: Display, V: Display, W: Display {
         /* Construct the inner value of the struct for the basic case */
         DisplaySlice {
-            inner: Formatted::new(self.borrow(), prefix, suffix),
+            inner: Formatted::new(self, prefix, suffix),
             separator
             }
         }
