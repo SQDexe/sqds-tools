@@ -36,6 +36,74 @@ macro_rules! select {
 
 
 /**
+A shorthand for extracting values from a fallible pattern matching expression.  
+
+This macro, similarly to [`matches!`], expands into a `match`,  
+which returns `Some` if the pattern fits, and `None` otherwise.  
+
+It fits best with custom, broad `enum`` types,  
+but works just as well with `structs`, `slices`, `Options`, `Results`, etc.  
+
+# Examples
+
+```rust
+# use sqds_tools::try_match;
+#
+/* Example type */
+enum Test {
+    Variant,
+    Other(bool),
+    YetAnother(u8)
+    }
+
+/* Example variable */
+let some_var = Test::Other(false);
+
+/* Check whether it's correct */
+assert_eq!(Some(false), try_match!(some_var, Test::Other(val) => val));
+assert_eq!(None, try_match!(some_var, Test::YetAnother(val) if val < 5 => val));
+```
+
+When paired with a try operator `?`,  
+this macro can be used as a convenient early return mechanism.
+
+```rust
+# use sqds_tools::try_match;
+#
+/* Example type */
+enum Test<'a> {
+    Variant(&'a [u8]),
+    Other(bool),
+    YetAnother
+    }
+
+/* Example function */
+fn sum_enum_values(value: Test<'_>) -> Option<u8> {
+    let [first, last] = try_match!(value, Test::Variant([first, .., last]) => [first, last])?;
+
+    Some(first * last)
+    }
+
+/* Check whether it's correct */
+assert_eq!(Some(64), sum_enum_values(Test::Variant(&[4, 16])));
+assert_eq!(None, sum_enum_values(Test::YetAnother));
+```
+
+[`matches!`]: https://doc.rust-lang.org/core/macro.matches.html
+*/
+#[macro_export]
+macro_rules! try_match {
+    ($value:expr, $pattern:pat $(if $guard:expr)? => $output:expr) => {
+        match $value {
+            $pattern $(if $guard)? => ::core::option::Option::Some($output),
+            _ => ::core::option::Option::None,
+            }
+        };
+    }
+
+
+
+/**
 Custom, batch assertion on a number of expressions.
 
 Asserts whether each one is equal to `true` at runtime.
