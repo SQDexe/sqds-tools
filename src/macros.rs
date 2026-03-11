@@ -19,14 +19,14 @@ let motd = select!(is_weekend,
     "Only a bit until the weekend"
     );
 
-/* Check whether it's  correct */
+/* Check whether it's correct */
 assert_eq!(motd, "It's the weekend!");
 ```
 */
 #[macro_export]
 macro_rules! select {
-    ($bool:expr, $truthy:expr, $falsy:expr) => {
-        match $bool {
+    ($boolean:expr, $truthy:expr, $falsy:expr) => {
+        match $boolean {
             true => $truthy,
             false => $falsy
             }
@@ -151,7 +151,7 @@ batch_assert!(
     );
 ```
 
-[`panic!`]: https://doc.rust-lang.org/std/macro.panic.html
+[`panic!`]: https://doc.rust-lang.org/core/macro.panic.html
 */
 #[macro_export]
 macro_rules! batch_assert {
