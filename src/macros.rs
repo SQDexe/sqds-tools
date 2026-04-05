@@ -78,15 +78,15 @@ enum Test<'a> {
     }
 
 /* Example function */
-fn sum_enum_values(value: Test<'_>) -> Option<u8> {
+fn mul_enum_values(value: Test<'_>) -> Option<u8> {
     let [first, last] = try_match!(value, Test::Variant([first, .., last]) => [first, last])?;
 
-    Some(first * last)
+    first.checked_mul(last)
     }
 
 /* Check whether it's correct */
-assert_eq!(Some(64), sum_enum_values(Test::Variant(&[4, 16])));
-assert_eq!(None, sum_enum_values(Test::YetAnother));
+assert_eq!(Some(64), mul_enum_values(Test::Variant(&[4, 16])));
+assert_eq!(None, mul_enum_values(Test::YetAnother));
 ```
 
 [`matches!`]: https://doc.rust-lang.org/core/macro.matches.html
