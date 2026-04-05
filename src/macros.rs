@@ -41,7 +41,7 @@ A shorthand for extracting values from a fallible pattern matching expression.
 This macro, similarly to [`matches!`], expands into a `match`,  
 which returns `Some` if the pattern fits, and `None` otherwise.  
 
-It fits best with custom, broad `enum`` types,  
+It fits best with custom, broad `enum` types,  
 but works just as well with `structs`, `slices`, `Options`, `Results`, etc.  
 
 # Examples
@@ -98,6 +98,80 @@ macro_rules! try_match {
             $pattern $(if $guard)? => ::core::option::Option::Some($output),
             _ => ::core::option::Option::None,
             }
+        };
+    }
+
+
+
+/**
+A shorthand for extracting values from a infallible pattern matching expression.  
+
+This macro is syntactically similar to [`matches!`],
+yet expands into a simple destructuring assignment,  
+and a return of the extracted value.  
+
+It fits best with custom, broad `enum` types,  
+but works just as well with `structs`, `slices`, `Options`, `Results`, etc.  
+
+# Examples
+
+```rust
+# use sqds_tools::unpack;
+#
+/* Example type */
+enum Role {
+    Player ( String ),
+    Op { name: String, permissions: u8 }
+    }
+
+/* Example variable */
+let role = Role::Op {
+    name: String::from("John Doe"),
+    permissions: 0b1010
+    };
+
+/* Check whether it's correct */
+assert_eq!("John Doe", unpack!(role, Role::Player(name) | Role::Op { name, .. } => name));
+```
+
+In most cases, it will usually be preferred,  
+to extract such logic into a separate function.
+
+```rust
+# use sqds_tools::unpack;
+#
+/* Example type */
+enum Character {
+    Villager { health: u32 },
+    Warrior { health: u32, damage: f32 },
+    Mage { health: u32, mana: u8 }
+    }
+
+/* Example method */
+impl Character {
+    fn get_health(&self) -> u32 {
+        unpack!(self,
+            Self::Villager { health } |
+            Self::Warrior { health, .. } |
+            Self::Mage { health, .. } =>
+            *health
+            )
+        }
+    }
+
+/* Example variable */
+let my_character = Character::Mage { health: 100, mana: 50 };
+
+/* Check whether it's correct */
+assert_eq!(100, my_character.get_health());
+```
+
+[`matches!`]: https://doc.rust-lang.org/core/macro.matches.html
+*/
+#[macro_export]
+macro_rules! unpack {
+    ($value:expr, $pattern:pat => $output:expr) => {
+        { let ( $pattern ) = $value; $output }
         };
     }
 
