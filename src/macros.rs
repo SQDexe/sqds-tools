@@ -47,7 +47,7 @@ but works just as well with `structs`, `slices`, `Options`, `Results`, etc.
 # Examples
 
 ```rust
-# use sqds_tools::try_match;
+# use sqds_tools::get_match;
 #
 /* Example type */
 enum Test {
@@ -60,15 +60,15 @@ enum Test {
 let some_var = Test::Other(false);
 
 /* Check whether it's correct */
-assert_eq!(Some(false), try_match!(some_var, Test::Other(val) => val));
-assert_eq!(None, try_match!(some_var, Test::YetAnother(val) if val < 5 => val));
+assert_eq!(Some(false), get_match!(some_var, Test::Other(val) => val));
+assert_eq!(None, get_match!(some_var, Test::YetAnother(val) if val < 5 => val));
 ```
 
 When paired with a try operator `?`,  
 this macro can be used as a convenient early return mechanism.
 
 ```rust
-# use sqds_tools::try_match;
+# use sqds_tools::get_match;
 #
 /* Example type */
 enum Test<'a> {
@@ -79,7 +79,7 @@ enum Test<'a> {
 
 /* Example function */
 fn mul_enum_values(value: Test<'_>) -> Option<u8> {
-    let [first, last] = try_match!(value, Test::Variant([first, .., last]) => [first, last])?;
+    let [first, last] = get_match!(value, Test::Variant([first, .., last]) => [first, last])?;
 
     first.checked_mul(last)
     }
@@ -92,7 +92,7 @@ assert_eq!(None, mul_enum_values(Test::YetAnother));
 [`matches!`]: https://doc.rust-lang.org/core/macro.matches.html
 */
 #[macro_export]
-macro_rules! try_match {
+macro_rules! get_match {
     ($value:expr, $pattern:pat $(if $guard:expr)? => $output:expr) => {
         match $value {
             $pattern $(if $guard)? => ::core::option::Option::Some($output),
@@ -116,7 +116,7 @@ but works just as well with `structs`, `slices`, `Options`, `Results`, etc.
 # Examples
 
 ```rust
-# use sqds_tools::unpack;
+# use sqds_tools::unpack_match;
 #
 /* Example type */
 enum Role {
@@ -131,14 +131,14 @@ let role = Role::Op {
     };
 
 /* Check whether it's correct */
-assert_eq!("John Doe", unpack!(role, Role::Player(name) | Role::Op { name, .. } => name));
+assert_eq!("John Doe", unpack_match!(role, Role::Player(name) | Role::Op { name, .. } => name));
 ```
 
 In most cases, it will usually be preferred,  
 to extract such logic into a separate function.
 
 ```rust
-# use sqds_tools::unpack;
+# use sqds_tools::unpack_match;
 #
 /* Example type */
 enum Character {
@@ -150,7 +150,7 @@ enum Character {
 /* Example method */
 impl Character {
     fn get_health(&self) -> u32 {
-        unpack!(self,
+        unpack_match!(self,
             Self::Villager { health } |
             Self::Warrior { health, .. } |
             Self::Mage { health, .. } =>
@@ -169,7 +169,7 @@ assert_eq!(100, my_character.get_health());
 [`matches!`]: https://doc.rust-lang.org/core/macro.matches.html
 */
 #[macro_export]
-macro_rules! unpack {
+macro_rules! unpack_match {
     ($value:expr, $pattern:pat => $output:expr) => {
         { let ( $pattern ) = $value; $output }
         };
