@@ -1,11 +1,14 @@
-use core::{
-    convert::Infallible,
-    fmt::{
-        Display,
-        Formatter,
-        Result as FmtResult,
-        Write
-        }
+use {
+    core::{
+        convert::Infallible,
+        fmt::{
+            Display,
+            Formatter,
+            Result as FmtResult,
+            Write
+            }
+        },
+    crate::get_match
     };
 
 
@@ -99,20 +102,20 @@ impl<T, U> Delimiter<T, U> {
 
     /** Helper function for extracting the prefix field. */
     const fn get_prefix(&self) -> Option<&T> {
-        match self {
-            Self::Prefix(prefix) | Self::Enclosed { prefix, .. } =>
-                Some(prefix),
-            _ => None
-            }
+        get_match!(self,
+            Self::Prefix(prefix) |
+            Self::Enclosed { prefix, .. } =>
+            prefix
+            )
         }
 
     /** Helper function for extracting the suffix field. */
     const fn get_suffix(&self) -> Option<&U> {
-        match self {
-            Self::Suffix(suffix) | Self::Enclosed { suffix, .. } =>
-                Some(suffix),
-            _ => None
-            }
+        get_match!(self,
+            Self::Suffix(suffix) |
+            Self::Enclosed { suffix, .. } =>
+            suffix
+            )
         }
     }
 
