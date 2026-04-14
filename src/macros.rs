@@ -79,7 +79,7 @@ enum Test<'a> {
 
 /* Example function */
 fn mul_enum_values(value: Test<'_>) -> Option<u8> {
-    let [first, last] = get_match!(value, Test::Variant([first, .., last]) => [first, last])?;
+    let (first, last) = get_match!(value, Test::Variant(&[first, .., last]) => (first, last))?;
 
     first.checked_mul(last)
     }
