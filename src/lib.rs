@@ -11,10 +11,7 @@ if some greater change were to happen to it.
 Please be mindful, and proceed with caution when using this package.
 */
 
-#![no_std]
-
-#[cfg(test)]
-extern crate std;
+#![cfg_attr(not(any(feature = "std", test)), no_std)]
 
 /* Modules declaration */
 mod layout;

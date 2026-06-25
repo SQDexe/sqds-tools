@@ -7,3 +7,7 @@ authors = ["SQD.exe"]
 repository = "https://github.com/SQDexe/sqds-tools"
 readme = "README.md"
 license = "Unlicense"
+
+[features]
+deafault = []
+std = []
