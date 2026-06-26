@@ -46,13 +46,14 @@ impl ResolveExitCode for Infallible {
 
 #[cfg(feature = "std")]
 impl_trait! {
+    #[cfg(feature = "std")]
     ResolveExitCode,
     {
     fn resolve(self) -> ExitCode {
         ExitCode::FAILURE
         }
     },
-    Box<dyn Error>, &dyn Error
+    Box<dyn Error>, &dyn Error, &mut dyn Error
     }
 
 #[cfg(feature = "std")]
@@ -78,6 +79,7 @@ impl ResolveExitCode for bool {
 
 #[cfg(feature = "std")]
 impl_trait! {
+    #[cfg(feature = "std")]
     ResolveExitCode,
     {
     fn resolve(self) -> ExitCode {
