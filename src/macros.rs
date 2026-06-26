@@ -250,6 +250,10 @@ Declares the body of a trait for a bunch of types.
 Useful for adding traits for multiple types,
 when using generics is cumbersome, or outright impossible.
 
+It's possible to add attribute tags before the trait name,  
+in order to make the attributes global for all the listed types.  
+You can also prefix each type individualy for specific, individiual conditions.
+
 # Examples
 
 ```rust
@@ -307,9 +311,25 @@ assert_eq!(f64::is_int(&f64::NAN), false);
 */
 #[macro_export]
 macro_rules! impl_trait {
-    {$name:path, $block:tt, $($type:ty),+} => {
+    /* Base case, with optional per-type attributes */
+    ($name:path, $block:tt, $( $(#[$meta:meta])* $types:ty ),+) => {
         $(
-        impl $name for $type $block
+        $(#[$meta])*
+        impl $name for $types $block
         )+
-        }
+        };
+    /* Global attribute case, recursively generates subsequent types */
+    ($(#[$meta:meta])+ $name:path, $block:tt, $first_type:ty $(, $rest_types:ty)*) => {
+        $(#[$meta])+
+        impl $name for $first_type $block
+
+        $crate::impl_trait! {
+            $(#[$meta])+ 
+            $name, 
+            $block 
+            $(, $rest_types)*
+            }
+        };
+    /* Global attribute case, recursive empty tail call */
+    ($(#[$meta:meta])+ $name:path, $block:tt) => {};
     }
