@@ -14,11 +14,14 @@ Please be mindful, and proceed with caution when using this package.
 #![cfg_attr(not(any(feature = "std", test)), no_std)]
 
 /* Modules declaration */
+mod exit_code;
 mod layout;
 mod macros;
 mod show;
 
 /* Public re-exports */
+#[cfg(feature = "std")]
+pub use crate::exit_code::ResolveExitCode;
 pub use crate::layout::LayoutMetrics;
 pub use crate::show::EmptyDisplay;
 pub use crate::show::DisplayOption;

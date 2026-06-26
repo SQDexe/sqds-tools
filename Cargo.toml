@@ -9,5 +9,5 @@ readme = "README.md"
 license = "Unlicense"
 
 [features]
-deafault = []
+default = []
 std = []
