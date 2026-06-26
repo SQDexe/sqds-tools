@@ -1,3 +1,7 @@
+/*! Tiny, handy macros for everyday coding. */
+
+
+
 /**
 Shorthand for *"robust"* `if`-`else`, or `match` expression,
 therefore this can be interpreted as a `ternary operator`.  

@@ -1,3 +1,5 @@
+/*! Extended display capabilities for `Option`, `Result`, and `slice` types. */
+
 use {
     core::{
         convert::Infallible,

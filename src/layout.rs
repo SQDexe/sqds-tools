@@ -1,3 +1,7 @@
+/*! Synthetic sugar trait over memory layout functions. */
+
+
+
 /**
 Synthetic sugar over memory layout functions.
 
