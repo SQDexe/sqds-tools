@@ -57,6 +57,7 @@ assert_eq!(
 [`Display`]: https://doc.rust-lang.org/std/fmt/trait.Display.html
 [`Infallible`]: https://doc.rust-lang.org/std/convert/enum.Infallible.html
 */
+#[derive(Debug, Clone, Copy)]
 pub struct EmptyDisplay;
 
 impl Display for EmptyDisplay {
@@ -78,6 +79,7 @@ where T: Display, W: Write {
     }
 
 /** Helper container representing a specific configuration of affixes. */
+#[derive(Debug, Clone)]
 enum Delimiter<T, U> {
     /** Value of the prefix. */
     Prefix(T),
@@ -126,6 +128,7 @@ impl<T, U> Delimiter<T, U> {
     }
 
 /** Helper container representing a value, together with its possible affix configuration. */
+#[derive(Debug, Clone)]
 struct Formatted<T, U, V> {
     /** Value to be displayed. */
     value: T,
