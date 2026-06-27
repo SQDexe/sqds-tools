@@ -230,6 +230,8 @@ as it might not suit everyone's vision and their needs.
 
 # Examples
 
+Basic usage:
+
 ```rust
 # use sqds_tools::ShowOption;
 #
@@ -244,6 +246,8 @@ assert_eq!(
     );
 ```
 
+Example with `None` variant:
+
 ```rust
 # use sqds_tools::ShowOption;
 #
@@ -257,6 +261,8 @@ assert_eq!(
     "Null"
     );
 ```
+
+Example with affixes:
 
 ```rust
 # use sqds_tools::ShowOption;
@@ -393,6 +399,8 @@ as it might not suit everyone's vision and their needs.
 
 # Examples
 
+Basic usage:
+
 ```rust
 # use sqds_tools::ShowResult;
 #
@@ -407,6 +415,8 @@ assert_eq!(
     );
 ```
 
+Example with `Err` variant:
+
 ```rust
 # use sqds_tools::ShowResult;
 #
@@ -420,6 +430,8 @@ assert_eq!(
     "69"
     );
 ```
+
+Example with affixes:
 
 ```rust
 # use sqds_tools::ShowResult;
@@ -582,6 +594,8 @@ as it might not suit everyone's vision and their needs.
 
 # Examples
 
+Basic usage:
+
 ```rust
 # use sqds_tools::ShowSlice;
 #
@@ -596,6 +610,8 @@ assert_eq!(
     );
 ```
 
+Example with array concat:
+
 ```rust
 # use sqds_tools::ShowSlice;
 #
@@ -609,6 +625,8 @@ assert_eq!(
     "foobar"
     );
 ```
+
+Example with slice separator join:
 
 ```rust
 # use sqds_tools::ShowSlice;
