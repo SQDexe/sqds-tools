@@ -4,9 +4,9 @@
 
 /**
 Shorthand for *"robust"* `if`-`else`, or `match` expression,
-therefore this can be interpreted as a `ternary operator`.  
+therefore this can be interpreted as a `ternary operator`.
 
-This macro expands into a `match` on a bool variable. 
+This macro expands into a `match` on a bool variable.
 
 # Examples
 
@@ -40,13 +40,13 @@ macro_rules! select {
 
 
 /**
-A shorthand for extracting values from a fallible pattern matching expression.  
+A shorthand for extracting values from a fallible pattern matching expression.
 
-This macro, similarly to [`matches!`], expands into a `match`,  
-which returns `Some` if the pattern fits, and `None` otherwise.  
+This macro, similarly to [`matches!`], expands into a `match`,
+which returns `Some` if the pattern fits, and `None` otherwise.
 
-It fits best with custom, broad `enum` types,  
-but works just as well with `structs`, `slices`, `Options`, `Results`, etc.  
+It fits best with custom, broad `enum` types,
+but works just as well with `structs`, `slices`, `Options`, `Results`, etc.
 
 # Examples
 
@@ -68,7 +68,7 @@ assert_eq!(Some(false), get_match!(some_var, Test::Other(val) => val));
 assert_eq!(None, get_match!(some_var, Test::YetAnother(val) if val < 5 => val));
 ```
 
-When paired with a try operator `?`,  
+When paired with a try operator `?`,
 this macro can be used as a convenient early return mechanism.
 
 ```rust
@@ -108,14 +108,14 @@ macro_rules! get_match {
 
 
 /**
-A shorthand for extracting values from a infallible pattern matching expression.  
+A shorthand for extracting values from a infallible pattern matching expression.
 
 This macro is syntactically similar to [`matches!`],
-yet expands into a simple destructuring assignment,  
-and a return of the extracted value.  
+yet expands into a simple destructuring assignment,
+and a return of the extracted value.
 
-It fits best with custom, broad `enum` types,  
-but works just as well with `structs`, `slices`, `Options`, `Results`, etc.  
+It fits best with custom, broad `enum` types,
+but works just as well with `structs`, `slices`, `Options`, `Results`, etc.
 
 # Examples
 
@@ -138,7 +138,7 @@ let role = Role::Op {
 assert_eq!("John Doe", unpack_match!(role, Role::Player(name) | Role::Op { name, .. } => name));
 ```
 
-In most cases, it will usually be preferred,  
+In most cases, it will usually be preferred,
 to extract such logic into a separate function.
 
 ```rust
@@ -250,8 +250,8 @@ Declares the body of a trait for a bunch of types.
 Useful for adding traits for multiple types,
 when using generics is cumbersome, or outright impossible.
 
-It's possible to add attribute tags before the trait name,  
-in order to make the attributes global for all the listed types.  
+It's possible to add attribute tags before the trait name,
+in order to make the attributes global for all the listed types.
 You can also prefix each type individualy for specific, individiual conditions.
 
 # Examples

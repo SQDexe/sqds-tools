@@ -35,7 +35,7 @@ let nothing = EmptyDisplay;
 assert_eq!(nothing.to_string(), "");
 ```
 
-### Intended use case: 
+### Intended use case:
 
 ```rust
 # use sqds_tools::{
@@ -78,12 +78,16 @@ where T: Display, W: Write {
     }
 
 /** Helper container representing a specific configuration of affixes. */
-#[doc(hidden)]
 enum Delimiter<T, U> {
+    /** Value of the prefix. */
     Prefix(T),
+    /** Value of the suffix. */
     Suffix(U),
+    /** Both values simultaneously. */
     Enclosed {
+        /** Value of the prefix. */
         prefix: T,
+        /** Value of the suffix. */
         suffix: U
         }
     }
@@ -122,9 +126,10 @@ impl<T, U> Delimiter<T, U> {
     }
 
 /** Helper container representing a value, together with its possible affix configuration. */
-#[doc(hidden)]
 struct Formatted<T, U, V> {
+    /** Value to be displayed. */
     value: T,
+    /** Possible affix configuration. */
     delimiter: Option<Delimiter<U, V>>
     }
 
@@ -175,6 +180,7 @@ This struct is outputted by functions of the [`ShowOption`] trait.
 */
 #[must_use = "this is a `Display` wrapper, which should be used"]
 pub struct DisplayOption<'a, T, U, V, W> {
+    /** The value to be displayed. */
     inner: Result<Formatted<&'a T, V, W>, U>,
     }
 
@@ -326,7 +332,7 @@ Display wrapper struct for [`Result`].
 
 A struct to help with [`Display`] implementations.
 
-This struct only exists to output a user-facing representation of [`Result`] as text,  
+This struct only exists to output a user-facing representation of [`Result`] as text,
 though this should not be taken as a golden standard for representing the type.
 
 This struct is outputted by functions of the [`ShowResult`] trait.
@@ -337,6 +343,7 @@ This struct is outputted by functions of the [`ShowResult`] trait.
 */
 #[must_use = "this is a `Display` wrapper, which should be used"]
 pub struct DisplayResult<'a, T, U, V, W, X, Y> {
+    /** The value to be displayed. */
     inner: Result<Formatted<&'a T, V, W>, Formatted<&'a U, X, Y>>,
     }
 
@@ -496,7 +503,7 @@ Display wrapper struct for [`Slice`].
 
 A struct to help with [`Display`] implementations.
 
-This struct only exists to output a user-facing representation of [`Slice`] as text,  
+This struct only exists to output a user-facing representation of [`Slice`] as text,
 though this should not be taken as a golden standard for representing the type.
 
 This struct is outputted by functions of the [`ShowSlice`] trait.
@@ -507,7 +514,9 @@ This struct is outputted by functions of the [`ShowSlice`] trait.
 */
 #[must_use = "this is a `Display` wrapper, which should be used"]
 pub struct DisplaySlice<'a, T, U, V, W> {
+    /** The values to be displayed. */
     inner: Formatted<&'a [T], U, W>,
+    /** Separator to display between values. */
     separator: Option<V>
     }
 
