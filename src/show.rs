@@ -896,8 +896,7 @@ mod slice {
     use {
         std::{
             vec,
-            string::ToString,
-            vec::Vec
+            string::ToString
             },
         crate::show::{
             EmptyDisplay as Empty,
@@ -1013,7 +1012,7 @@ mod slice {
         assert_eq!(
             value.iter()
                 .map(|e| e.show_or("NaN"))
-                .collect::<Vec<_>>()
+                .collect::<Box<[_]>>()
                 .show_slice()
                 .to_string(),
             "[1, NaN, 2, NaN, 3]"
