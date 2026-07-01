@@ -14,6 +14,7 @@ Please be mindful, and proceed with caution when using this package.
 #![cfg_attr(not(any(feature = "std", test)), no_std)]
 
 /* Modules declaration */
+#[cfg(feature = "std")]
 mod exit_code;
 mod layout;
 mod macros;

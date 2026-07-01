@@ -1,6 +1,5 @@
 /*! A shorthand for converting different types into corresponding `ExitCode` values. */
 
-#[cfg(feature = "std")]
 use {
     core::{
         convert::Infallible,
@@ -17,6 +16,8 @@ use {
 
 /**
 Type converting trait for retrieving [`ExitCode`] from values.
+
+> Available on **crate feature std** only.
 
 It's similar to the [`report`] method, except it doesn't cause any
 side effects, like writing to the output.
@@ -58,13 +59,11 @@ assert_eq!(error.resolve(), ExitCode::FAILURE);
 [`ExitCode`]: https://doc.rust-lang.org/std/process/struct.ExitCode.html
 [`report`]: https://doc.rust-lang.org/std/process/trait.Termination.html#tymethod.report
 */
-#[cfg(feature = "std")]
 pub trait ResolveExitCode {
     /** Collapse the value into a corresponding exit code. */
     fn resolve(self) -> ExitCode;
     }
 
-#[cfg(feature = "std")]
 impl ResolveExitCode for ExitCode {
     fn resolve(self) -> ExitCode {
         match self {
@@ -74,23 +73,19 @@ impl ResolveExitCode for ExitCode {
         }
     }
 
-#[cfg(feature = "std")]
 impl ResolveExitCode for () {
     fn resolve(self) -> ExitCode {
         ExitCode::SUCCESS
         }
     }
 
-#[cfg(feature = "std")]
 impl ResolveExitCode for Infallible {
     fn resolve(self) -> ExitCode {
         match self {}
         }
     }
 
-#[cfg(feature = "std")]
 impl_trait! {
-    #[cfg(feature = "std")]
     ResolveExitCode,
     {
     fn resolve(self) -> ExitCode {
@@ -100,7 +95,6 @@ impl_trait! {
     &dyn Error, &mut dyn Error
     }
 
-#[cfg(feature = "std")]
 impl<T> ResolveExitCode for Option<T> {
     fn resolve(self) -> ExitCode {
         match self {
@@ -110,7 +104,6 @@ impl<T> ResolveExitCode for Option<T> {
         }
     }
 
-#[cfg(feature = "std")]
 impl<T, E> ResolveExitCode for Result<T, E> {
     fn resolve(self) -> ExitCode {
         match self {
@@ -120,7 +113,6 @@ impl<T, E> ResolveExitCode for Result<T, E> {
         }
     }
 
-#[cfg(feature = "std")]
 impl ResolveExitCode for bool {
     fn resolve(self) -> ExitCode {
         select!(
@@ -131,9 +123,7 @@ impl ResolveExitCode for bool {
         }
     }
 
-#[cfg(feature = "std")]
 impl_trait! {
-    #[cfg(feature = "std")]
     ResolveExitCode,
     {
     fn resolve(self) -> ExitCode {
@@ -149,7 +139,6 @@ impl_trait! {
 
 
 
-#[cfg(feature = "std")]
 #[cfg(test)]
 mod test {
     use {
