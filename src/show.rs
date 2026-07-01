@@ -514,16 +514,16 @@ where T: Display, E: Display {
 
 
 /**
-Display wrapper struct for [`Slice`].
+Display wrapper struct for [`slice`].
 
 A struct to help with [`Display`] implementations.
 
-This struct only exists to output a user-facing representation of [`Slice`] as text,
+This struct only exists to output a user-facing representation of [`slice`] as text,
 though this should not be taken as a golden standard for representing the type.
 
 This struct is outputted by functions of the [`ShowSlice`] trait.
 
-[`Slice`]: https://doc.rust-lang.org/std/primitive.slice.html
+[`slice`]: https://doc.rust-lang.org/std/primitive.slice.html
 [`Display`]: https://doc.rust-lang.org/std/fmt/trait.Display.html
 [`ShowSlice`]: ./trait.ShowSlice.html
 */
@@ -567,13 +567,13 @@ where T: Display, U: Display, V: Display, W: Display {
     }
 
 /**
-Value printing trait for [`Slice`] types.
+Value printing trait for [`slice`] types.
 
 This trait provides a set of functions output [`DisplaySlice`] wrapper struct,
 which implements the [`Display`] trait.
 It's main purpose,
 is to take a short-lived reference to the value,
-and then print a user-facing representation of the [`Slice`].
+and then print a user-facing representation of the [`slice`].
 
 Some functions allow passing a few additional values,
 which can be used to improve formatting.
@@ -586,7 +586,7 @@ it needs **all** of the values to implement the [`Display`] trait.
 # Disclaimer
 
 Rust's core guidelines give a reason,
-why [`Slice`] type doesn't implement [`Display`] trait,
+why [`slice`] type doesn't implement [`Display`] trait,
 and why it can't be derived.
 
 Therefore, one should take usage of this trait with a pinch of salt,
@@ -642,14 +642,14 @@ assert_eq!(
     );
 ```
 
-[`Slice`]: https://doc.rust-lang.org/std/primitive.slice.html
+[`slice`]: https://doc.rust-lang.org/std/primitive.slice.html
 [`Display`]: https://doc.rust-lang.org/std/fmt/trait.Display.html
 [`DisplaySlice`]: ./struct.DisplaySlice.html
 */
 pub trait ShowSlice<T>
 where T: Display {
     /**
-    Show the `Slice`'s elements *enclosed*, and *separated* by the provided values,
+    Show the `slice`'s elements *enclosed*, and *separated* by the provided values,
     by individually passing `Option`s for each one.
 
     Wrapper returned by this function might need additional type annotation.
@@ -660,18 +660,18 @@ where T: Display {
     #[must_use = "this function returns a `Display` wrapper, which should be used"]
     fn show_manual<U, V, W>(&self, prefix: Option<U>, separator: Option<V>, suffix: Option<W>) -> DisplaySlice<'_, T, U, V, W>
     where U: Display, V: Display, W: Display;
-    /** Show the `Slice`'s elements *enclosed*, and *separated* by the provided values. */
+    /** Show the `slice`'s elements *enclosed*, and *separated* by the provided values. */
     #[must_use = "this function returns a `Display` wrapper, which should be used"]
     fn show_enclosed<U, V, W>(&self, prefix: U, separator: V, suffix: W) -> DisplaySlice<'_, T, U, V, W>
     where U: Display, V: Display, W: Display;
-    /** Show the `Slice`'s elements *separated* by the provided value. */
+    /** Show the `slice`'s elements *separated* by the provided value. */
     #[must_use = "this function returns a `Display` wrapper, which should be used"]
     fn show_join<U>(&self, separator: U) -> DisplaySlice<'_, T, Infallible, U, Infallible>
     where U: Display;
-    /** Show the `Slice`'s elements directly by attaching them without any affixes, or separatorst. */
+    /** Show the `slice`'s elements directly by attaching them without any affixes, or separatorst. */
     #[must_use = "this function returns a `Display` wrapper, which should be used"]
     fn show_concat(&self) -> DisplaySlice<'_, T, Infallible, Infallible, Infallible>;
-    /** Show the `Slice`'s elements *enclosed* by `'['`, `']'` signs, and *separated* by `", "` text. */
+    /** Show the `slice`'s elements *enclosed* by `'['`, `']'` signs, and *separated* by `", "` text. */
     #[must_use = "this function returns a `Display` wrapper, which should be used"]
     fn show_slice(&self) -> DisplaySlice<'_, T, char, &str, char>;
     }
