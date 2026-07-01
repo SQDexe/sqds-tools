@@ -46,7 +46,7 @@ This macro, similarly to [`matches!`], expands into a `match`,
 which returns `Some` if the pattern fits, and `None` otherwise.
 
 It fits best with custom, broad `enum` types,
-but works just as well with `structs`, `slices`, `Options`, `Results`, etc.
+but works just as well with `struct`, `slice`, `Option`, `Result`, etc.
 
 # Examples
 
@@ -115,7 +115,7 @@ yet expands into a simple destructuring assignment,
 and a return of the extracted value.
 
 It fits best with custom, broad `enum` types,
-but works just as well with `structs`, `slices`, `Options`, `Results`, etc.
+but works just as well with `struct`, `slice`, `Option`, `Result`, etc.
 
 # Examples
 
